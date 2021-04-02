@@ -1,0 +1,52 @@
+GET http://192.168.43.102/api/services
+
+###
+
+POST http://192.168.43.102/api/phoneNumberAuth
+Content-Type: application/json
+
+{
+    "number": "6394233643"
+}
+
+###
+
+POST http://192.168.43.102/api/otpAuth
+Content-Type: application/json
+
+{
+    "number": "6394233643",
+    "otp": "6141"
+}
+
+###
+
+POST http://192.168.43.102/auth/api/getNearestTractor
+Content-Type: application/json
+
+{
+    "latitude": "26.881735",
+    "longitude": "80.993808",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwiaWF0IjoxNjE3MDMyNjAxLCJleHAiOjE2MTk2MjQ2MDF9.gmG9R0rr9jL2dU2W7UNYBqCtOci4iqWImV2THbJnyO8"
+}
+
+###
+
+POST http://192.168.43.102/auth/api/locationLabel
+Content-Type: application/json
+
+{
+    "latitude": "26.881735",
+    "longitude": "80.993808",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwiaWF0IjoxNjE3MDMyNjAxLCJleHAiOjE2MTk2MjQ2MDF9.gmG9R0rr9jL2dU2W7UNYBqCtOci4iqWImV2THbJnyO8"
+}
+
+###
+
+POST http://192.168.43.102/auth/api/changeName
+Content-Type: application/json
+
+{
+    "name": "case3",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwibmFtZSI6IlBha29kYSIsInJhdGluZyI6IjQuNjciLCJpYXQiOjE2MTcyMzczNzAsImV4cCI6MTYxOTgyOTM3MH0.Qa0f1Y80GqTWOWrom_hgcnm1g-9VTWKWbhDY5MMrC4o"
+}
