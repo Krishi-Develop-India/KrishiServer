@@ -2,12 +2,19 @@ const router = require('express').Router();
 
 const jwt = require('../helper/jwt');
 const Tractor = require('../models/tractorUser');
+const serviceRequest = require('../models/serviceRequest');
 const GeoCoding = require('../services/geolocation');
 const upload = require('../helper/multer');
 const User = require('../models/user')
 const moveFile = require('move-file');
 const fs = require('fs');
 const path = require('path');
+
+router.post('/getServices', jwt.validate, async (req, res) => {
+    await User.distinct('userType', (error, array) => {
+        res.send(array.filter(element => element=='user'));
+    });
+});
 
 router.post('/locationLabel', jwt.validate, async (req, res) => {
     const { latitude, longitude } = req.body;
@@ -106,7 +113,33 @@ router.post('/bookTractor', jwt.validate, async (req, res) => {
     ]);
     if(data.length == 0) return res.status(200).send("No vehicle found");
     //send request to the tractors so that they can accept or reject this offer
-    res.send(data);
+    
+});
+
+router.post('/getPlaces', jwt.validate, async (req, res) => {
+    const { user } = req;
+    const jsonArray = [];
+    user.locations.forEach(element => {
+        jsonArray.push(JSON.parse(element));
+    });
+    res.send(jsonArray);
+});
+
+router.post('/deletePlace', jwt.validate, async (req, res) => {
+    const { id } = req.body;
+    const { user } = req;
+    const tempArray = [];
+    user.locations.forEach(element => {
+        tempArray.push(JSON.parse(element));
+    });
+    const newTempArray = tempArray.filter(currentItem => currentItem.id!=id);
+    const newTempArrayStringFormat = [];
+    newTempArray.forEach(element => {
+        newTempArrayStringFormat.push(JSON.stringify(element));
+    });
+    user.locations = newTempArrayStringFormat;
+    await user.save();
+    res.status(200).send(newTempArray);
 });
 
 module.exports = router;

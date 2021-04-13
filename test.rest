@@ -6,7 +6,8 @@ POST http://192.168.43.102/api/phoneNumberAuth
 Content-Type: application/json
 
 {
-    "number": "6394233643"
+    "number": "6394233643",
+    "user": "tractor"
 }
 
 ###
@@ -49,4 +50,32 @@ Content-Type: application/json
 {
     "name": "case3",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwibmFtZSI6IlBha29kYSIsInJhdGluZyI6IjQuNjciLCJpYXQiOjE2MTcyMzczNzAsImV4cCI6MTYxOTgyOTM3MH0.Qa0f1Y80GqTWOWrom_hgcnm1g-9VTWKWbhDY5MMrC4o"
+}
+
+###
+
+POST http://192.168.43.102/auth/api/getPlaces
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwiaWF0IjoxNjE3MDMyNjAxLCJleHAiOjE2MTk2MjQ2MDF9.gmG9R0rr9jL2dU2W7UNYBqCtOci4iqWImV2THbJnyO8"
+}
+
+###
+
+POST http://192.168.43.102/auth/api/deletePlace
+Content-Type: application/json
+
+{
+    "id": "3",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwiaWF0IjoxNjE3MDMyNjAxLCJleHAiOjE2MTk2MjQ2MDF9.gmG9R0rr9jL2dU2W7UNYBqCtOci4iqWImV2THbJnyO8"
+}
+
+###
+
+POST http://192.168.43.102/auth/api/getServices
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwiaWF0IjoxNjE3MDMyNjAxLCJleHAiOjE2MTk2MjQ2MDF9.gmG9R0rr9jL2dU2W7UNYBqCtOci4iqWImV2THbJnyO8"
 }

@@ -35,7 +35,11 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
         default: "undefined",
-    }
+    },
+    vehicle: {
+        type: String,
+        default: null,
+    },
 });
 
 module.exports = mongoose.model('user', schema);

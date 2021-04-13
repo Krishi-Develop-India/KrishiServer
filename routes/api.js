@@ -48,7 +48,11 @@ router.get('/services', (req, res)=>{
 
 router.post('/phoneNumberAuth', async (req, res) => {
     try{
-        const { number }  = req.body;
+        const { number, user }  = req.body;
+        //If there a request from some other type of app
+        //for some other type of user, we can just send an error
+        const currentUser = await User.findOne({number});
+        if(currentUser.userType !== user) return res.status(401).send("User of other type exist in our database");
         console.log(number);
         //Let's see if the number still exists in our database
         //If the number still exists, we do not need to create a new one
@@ -73,7 +77,7 @@ router.post('/phoneNumberAuth', async (req, res) => {
 router.post('/otpAuth', async (req, res) => {
     try{
         //lets check the otp again something
-        const { otp, number } = req.body;
+        const { otp, number, user } = req.body;
         // console.log(otp, number);
         const currentOtp = await Otp.findOne({number});
         if(!currentOtp) return res.status(400).send("Otp not valid or has expired");
@@ -83,7 +87,8 @@ router.post('/otpAuth', async (req, res) => {
         await Otp.deleteOne({number});
         const currentUser = await User.findOne({number});
         if(!currentUser) { //No user? Let's create a user
-            currentUser = new User({number});
+            //If this is a tractor or something else then currentUser is changed
+            currentUser = new User({number, userType: user});
             await currentUser.save();
         }
         return res.status(200).send(jwt.create(number, currentUser.name, currentUser.rating, currentUser.uri));
