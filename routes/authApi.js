@@ -9,10 +9,50 @@ const User = require('../models/user')
 const moveFile = require('move-file');
 const fs = require('fs');
 const path = require('path');
+const io = require('../routes/socket').io;
+const Ride = require('../models/rides');
 
 router.post('/getServices', jwt.validate, async (req, res) => {
     await User.distinct('userType', (error, array) => {
-        res.send(array.filter(element => element=='user'));
+        //res.send(array.filter(element => element!='user'));
+        res.send([
+            {
+                price: 50, 
+                id: 1,
+                img: 'inventory', 
+                name: "Inventory",
+            },
+            {
+                price: 60,
+                id: 2,
+                img: 'tractor',
+                name: "Tractor",
+            },
+            {
+                price: 70,
+                id: 3,
+                img: 'harvester',
+                name: "Harvester",
+            },
+            {
+                price: 80,
+                id: 4,
+                img: 'labour',
+                name: 'Labour',
+            },
+            {
+                price: 90,
+                id: 5,
+                img: 'labour',
+                name: 'Labour',
+            },
+            {
+                price: 100,
+                id: 6,
+                img: 'labour',
+                name: 'Labour',
+            }
+        ]);
     });
 });
 
@@ -99,7 +139,8 @@ router.post('/changeProfileImage',  async (req, res) => {
 });
 
 router.post('/bookTractor', jwt.validate, async (req, res) => {
-    const { latitude, longitude } = req.body;
+    const { latitude, longitude, area, price } = req.body;
+    console.log(latitude, longitude, area, price); 
     let data = await Tractor.aggregate([
         { "$geoNear": {
             "near": {
@@ -111,7 +152,31 @@ router.post('/bookTractor', jwt.validate, async (req, res) => {
             "distanceField": "distance",
         }}
     ]);
-    if(data.length == 0) return res.status(200).send("No vehicle found");
+    console.log("We are working on it");
+    if(data.length == 0) return res.send("No ride available");
+    const newRide = new Ride({
+        consumer: req.user._id,
+        price: price,
+        location: {
+            type: "Point",
+            coordinates: [ parseFloat(longitude), parseFloat(latitude) ],
+        },
+        serviceType: 'tractor',
+    });
+    // await newRide.save();
+    res.send("Finding your Tractor");
+    for(let i=0;i<1;i++) {
+        let tractor = data[i];
+        if(newRide.provider != null) break;
+        const roomID = (await User.findOne({number: tractor.number}))._id.toString();
+        console.log(`Room ID as per req is ${roomID} and type is ${typeof(roomID)}`)
+        const socketInRoom = io.sockets.adapter.rooms.get(roomID);
+        console.log(socketInRoom.size);
+        if(socketInRoom.size == 1) {
+            io.to(roomID).emit("contact");
+        }
+    }
+    // if(data.length == 0) return res.status(200).send("No vehicle found");
     //send request to the tractors so that they can accept or reject this offer
     
 });
@@ -122,6 +187,7 @@ router.post('/getPlaces', jwt.validate, async (req, res) => {
     user.locations.forEach(element => {
         jsonArray.push(JSON.parse(element));
     });
+    console.log(jsonArray);
     res.send(jsonArray);
 });
 
@@ -140,6 +206,29 @@ router.post('/deletePlace', jwt.validate, async (req, res) => {
     user.locations = newTempArrayStringFormat;
     await user.save();
     res.status(200).send(newTempArray);
+});
+
+router.post('/switchTractor', jwt.validate, async (req, res) => {
+    const { latitude, longitude, status } = req.body;
+    const { number, name, tractorNumber } = req.user;
+    if(status) {
+        const newTractor = new Tractor({
+           name,
+           number,
+           tractorNumber: 'xxx',
+           location: {
+            type: "Point",
+            coordinates: [ parseFloat(longitude), parseFloat(latitude) ],
+            },
+        });
+        await newTractor.save();
+        console.log("New tractor saved successfully");
+        res.send(200);
+    } else {
+        await Tractor.deleteOne({number});
+        console.log("New tractor deleted successfully");
+        res.send(200);
+    }
 });
 
 module.exports = router;

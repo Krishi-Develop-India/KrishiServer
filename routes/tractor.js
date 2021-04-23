@@ -7,7 +7,7 @@ const router = require('express').Router();
 
 router.post('/deliverService', jwt.verify, async (req, res) => {
     //So here is a request which has the location of the tractor service
-    const { user, latitude, longitude } = req.body;
+    const { user="user", latitude, longitude } = req.body;
     const currentTractorUser = await tractorUser.findOne({number: user.number});
     if(!currentTractorUser) {
         const newTractorUser = new tractorUser({

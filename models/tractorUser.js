@@ -24,10 +24,6 @@ const schema = mongoose.Schema({
           required: true
         }
     },
-    service: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: null,
-    },
 });
 
 schema.index({location: '2dsphere'})

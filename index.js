@@ -1,5 +1,6 @@
 if(process.env !== 'production') require('dotenv').config();
 
+const http = require('http');
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -12,6 +13,8 @@ const download = require('./routes/download');
 mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}).then(() => console.log("Connected"));
 
 const app = express();
+const server = http.createServer(app);
+require('./routes/socket').start(server);
 
 app.use(express.json()); 
 app.use(express.urlencoded({extended: true}));
@@ -23,4 +26,4 @@ app.use('/auth/api', authapi);
 app.use('/admin', admin);
 app.use('/download', download);
 
-app.listen(process.env.PORT, ()=>console.log(`Server started on port ${process.env.PORT}`));
+server.listen(process.env.PORT, ()=>console.log(`Server started on port ${process.env.PORT}`));

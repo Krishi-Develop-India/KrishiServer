@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
     },
 });
 
-schema.index({createdAt: 1}, {expireAfterSeconds: 30}); //The otp fails to work after 30 seconds
+schema.index({createdAt: 1}, {expireAfterSeconds: 60}); //The otp fails to work after 30 seconds
 
 const model = mongoose.model('otp', schema);
 

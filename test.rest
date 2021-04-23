@@ -1,3 +1,5 @@
+
+
 GET http://192.168.43.102/api/services
 
 ###
@@ -6,8 +8,8 @@ POST http://192.168.43.102/api/phoneNumberAuth
 Content-Type: application/json
 
 {
-    "number": "6394233643",
-    "user": "tractor"
+    "number": "8423160565",
+    "user": "user"
 }
 
 ###
@@ -16,8 +18,8 @@ POST http://192.168.43.102/api/otpAuth
 Content-Type: application/json
 
 {
-    "number": "6394233643",
-    "otp": "6141"
+    "number": "8423160565",
+    "otp": "5812"
 }
 
 ###
@@ -79,3 +81,17 @@ Content-Type: application/json
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwiaWF0IjoxNjE3MDMyNjAxLCJleHAiOjE2MTk2MjQ2MDF9.gmG9R0rr9jL2dU2W7UNYBqCtOci4iqWImV2THbJnyO8"
 }
+
+###
+
+POST http://192.168.43.102/auth/api/bookTractor
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI4NDIzMTYwNTY1IiwibmFtZSI6IlNoaW5jaGFuIiwicmF0aW5nIjoiNS4wIiwidXJpIjoidW5kZWZpbmVkIiwiaWF0IjoxNjE5MTEwNjE4LCJleHAiOjE2MjE3MDI2MTh9.1HzvTjO5eDdWkszEyDm9tPxsHdNQn_VfFguKWjzFbbU",
+    "latitude": "26.8816524",
+    "longitude": "80.9935531",
+    "area": "1",
+    "price": "120"
+}
+
