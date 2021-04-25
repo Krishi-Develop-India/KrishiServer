@@ -32,10 +32,7 @@ const handleConnection = socket => {
     if(socket.user.userType == 'user') {
         
     } else if(socket.user.userType == 'tractor') {
-        socket.on('updated_driver_location', location => {
-            console.log(location);
-        });
-        socket.emit('request', {name: 'Shobhit'});
+        tractorSocket(socket);
     } else if(socket.user.userType == 'labour') {
 
     } else if(socket.user.userType == 'harvester') {

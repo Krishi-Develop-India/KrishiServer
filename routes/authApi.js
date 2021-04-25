@@ -163,7 +163,7 @@ router.post('/bookTractor', jwt.validate, async (req, res) => {
         },
         serviceType: 'tractor',
     });
-    // await newRide.save();
+    await newRide.save();
     res.send("Finding your Tractor");
     for(let i=0;i<1;i++) {
         let tractor = data[i];
@@ -173,7 +173,7 @@ router.post('/bookTractor', jwt.validate, async (req, res) => {
         const socketInRoom = io.sockets.adapter.rooms.get(roomID);
         console.log(socketInRoom.size);
         if(socketInRoom.size == 1) {
-            io.to(roomID).emit("contact");
+            io.to(roomID).emit('request', {price: 1700, area: "1 Bigha", distance: "5 KM", rating: "4.78", latitude: 26.924288, longitude: 80.712947, _id: newRide._id});
         }
     }
     // if(data.length == 0) return res.status(200).send("No vehicle found");
