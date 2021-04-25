@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const { AccessTokenInstance } = require('twilio/lib/rest/verify/v2/service/accessToken');
 
 const User = require('../models/user');
 

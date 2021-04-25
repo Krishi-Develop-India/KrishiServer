@@ -17,6 +17,7 @@ const validateJWT = (socket, token, next) => {
 };
 
 io.use((socket, next) => {
+    console.log("Server request");
     const token = socket.handshake.auth.token;
     console.log(`Received token`);
     validateJWT(socket, token, next);
@@ -34,6 +35,7 @@ const handleConnection = socket => {
         socket.on('updated_driver_location', location => {
             console.log(location);
         });
+        socket.emit('request', {name: 'Shobhit'});
     } else if(socket.user.userType == 'labour') {
 
     } else if(socket.user.userType == 'harvester') {
