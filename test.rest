@@ -4,7 +4,7 @@ GET http://192.168.43.102/api/services
 
 ###
 
-POST http://192.168.43.102/api/phoneNumberAuth
+POST http://192.168.43.103/api/phoneNumberAuth
 Content-Type: application/json
 
 {
@@ -14,12 +14,12 @@ Content-Type: application/json
 
 ###
 
-POST http://192.168.43.102/api/otpAuth
+POST http://192.168.43.103/api/otpAuth
 Content-Type: application/json
 
 {
     "number": "8423160565",
-    "otp": "5812"
+    "otp": "4351"
 }
 
 ###
@@ -56,11 +56,11 @@ Content-Type: application/json
 
 ###
 
-POST http://192.168.43.102/auth/api/getPlaces
+POST http://192.168.43.103/auth/api/getPlaces
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwiaWF0IjoxNjE3MDMyNjAxLCJleHAiOjE2MTk2MjQ2MDF9.gmG9R0rr9jL2dU2W7UNYBqCtOci4iqWImV2THbJnyO8"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI4NDIzMTYwNTY1IiwibmFtZSI6IlNoaW5jaGFuIiwicmF0aW5nIjoiNS4wIiwidXJpIjoidW5kZWZpbmVkIiwiaWF0IjoxNjE5NjI2MDExLCJleHAiOjE2MjIyMTgwMTF9.YDk9g3uJN2xO6FEWgxWS3AAUnh2mtL2ZJ0Ot3Lp4t8U"
 }
 
 ###
@@ -75,11 +75,11 @@ Content-Type: application/json
 
 ###
 
-POST http://192.168.43.102/auth/api/getServices
+POST http://192.168.43.103/auth/api/getServices
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI2Mzk0MjMzNjQzIiwiaWF0IjoxNjE3MDMyNjAxLCJleHAiOjE2MTk2MjQ2MDF9.gmG9R0rr9jL2dU2W7UNYBqCtOci4iqWImV2THbJnyO8"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI4NDIzMTYwNTY1IiwibmFtZSI6IlNoaW5jaGFuIiwicmF0aW5nIjoiNS4wIiwidXJpIjoidW5kZWZpbmVkIiwiaWF0IjoxNjE5NjI2MDExLCJleHAiOjE2MjIyMTgwMTF9.YDk9g3uJN2xO6FEWgxWS3AAUnh2mtL2ZJ0Ot3Lp4t8U"
 }
 
 ###

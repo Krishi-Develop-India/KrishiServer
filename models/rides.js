@@ -29,6 +29,11 @@ const schema = mongoose.Schema({
         required: true,
         enum: ['tractor', 'labour', 'harvester', 'inventory'],
     },
+    status: {
+        type: String,
+        enum: ['pending', 'workInProgress', 'accepted', 'completed', 'userCancelledAfterConfirmed', 'tractorCancelledAfterConfirmed', 'userCancelledBeforeConfirmed', 'serviceNotFound'],
+        default: 'pending',
+    },
 });
 
 

@@ -2,7 +2,6 @@ const router = require('express').Router();
 
 const jwt = require('../helper/jwt');
 const Tractor = require('../models/tractorUser');
-const serviceRequest = require('../models/serviceRequest');
 const GeoCoding = require('../services/geolocation');
 const upload = require('../helper/multer');
 const User = require('../models/user')
@@ -11,55 +10,39 @@ const fs = require('fs');
 const path = require('path');
 const io = require('../routes/socket').io;
 const Ride = require('../models/rides');
+const Service = require('../models/service');
 
 router.post('/getServices', jwt.validate, async (req, res) => {
-    await User.distinct('userType', (error, array) => {
-        //res.send(array.filter(element => element!='user'));
-        res.send([
-            {
-                price: 50, 
+    await User.distinct('userType', async (error, array) => {
+        console.log(array.filter(element => element!='user'));
+        array = array.filter(element => element!='user');
+        let serviceArray  = [];
+        const currentService = await Service.findOne({area: 'lucknow'});
+        if(!currentService) {
+            return ({
+                price: 1000,
                 id: 1,
-                img: 'inventory', 
-                name: "Inventory",
-            },
-            {
-                price: 60,
-                id: 2,
                 img: 'tractor',
-                name: "Tractor",
-            },
-            {
-                price: 70,
-                id: 3,
-                img: 'harvester',
-                name: "Harvester",
-            },
-            {
-                price: 80,
-                id: 4,
-                img: 'labour',
-                name: 'Labour',
-            },
-            {
-                price: 90,
-                id: 5,
-                img: 'labour',
-                name: 'Labour',
-            },
-            {
-                price: 100,
-                id: 6,
-                img: 'labour',
-                name: 'Labour',
-            }
-        ]);
+                name: 'Tractor',
+            });
+        }
+        for(let i = 1; i<=array.length;i++) {
+            serviceArray.push({
+                price: currentService[array[i-1]],
+                id: i,
+                img: array[i-1],
+                name: array[i-1].charAt(0).toUpperCase() + array[i-1].slice(1)
+            })
+        }
+        console.log(serviceArray);
+        res.send(serviceArray);
     });
 });
 
 router.post('/locationLabel', jwt.validate, async (req, res) => {
     const { latitude, longitude } = req.body;
-    const location = await GeoCoding.getLocalityData(latitude, longitude);
-    res.send(location.label);
+    //const location = await GeoCoding.getLocalityData(latitude, longitude);
+    res.send('Lucknow');
 });
 
 router.post('/getNearestTractor', jwt.validate, async (req, res) => {
@@ -153,7 +136,7 @@ router.post('/bookTractor', jwt.validate, async (req, res) => {
         }}
     ]);
     console.log("We are working on it");
-    if(data.length == 0) return res.send("No ride available");
+    if(data.length == 0) return res.status(404).send("No ride available");
     const newRide = new Ride({
         consumer: req.user._id,
         price: price,
@@ -164,7 +147,7 @@ router.post('/bookTractor', jwt.validate, async (req, res) => {
         serviceType: 'tractor',
     });
     await newRide.save();
-    res.send("Finding your Tractor");
+    res.status(200).send({_id: newRide._id});
     for(let i=0;i<1;i++) {
         let tractor = data[i];
         if(newRide.provider != null) break;
@@ -172,8 +155,8 @@ router.post('/bookTractor', jwt.validate, async (req, res) => {
         console.log(`Room ID as per req is ${roomID} and type is ${typeof(roomID)}`)
         const socketInRoom = io.sockets.adapter.rooms.get(roomID);
         console.log(socketInRoom.size);
-        if(socketInRoom.size == 1) {
-            io.to(roomID).emit('request', {price: 1700, area: "1 Bigha", distance: "5 KM", rating: "4.78", latitude: 26.924288, longitude: 80.712947, _id: newRide._id});
+        if(socketInRoom.size == 1 || true) {
+            io.to(roomID).emit('request', {price: price, area: area, distance: data.distance, rating: "4.78", latitude: latitude, longitude: longitude, _id: newRide._id});
         }
     }
     // if(data.length == 0) return res.status(200).send("No vehicle found");
@@ -211,6 +194,11 @@ router.post('/deletePlace', jwt.validate, async (req, res) => {
 router.post('/switchTractor', jwt.validate, async (req, res) => {
     const { latitude, longitude, status } = req.body;
     const { number, name, tractorNumber } = req.user;
+    const alreadyTractor = await Tractor.findOne({number});
+    if(alreadyTractor && status) {
+        console.log("Tractor already functioning");
+        return res.send(200); 
+    }
     if(status) {
         const newTractor = new Tractor({
            name,

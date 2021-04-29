@@ -30,9 +30,9 @@ const handleConnection = socket => {
     console.log(`The roomID: ${roomID}`);
     
     if(socket.user.userType == 'user') {
-        
+        userSocket(socket, io);
     } else if(socket.user.userType == 'tractor') {
-        tractorSocket(socket);
+        tractorSocket(socket, io);
     } else if(socket.user.userType == 'labour') {
 
     } else if(socket.user.userType == 'harvester') {
