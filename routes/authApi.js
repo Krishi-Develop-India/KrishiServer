@@ -41,8 +41,13 @@ router.post('/getServices', jwt.validate, async (req, res) => {
 
 router.post('/locationLabel', jwt.validate, async (req, res) => {
     const { latitude, longitude } = req.body;
-    //const location = await GeoCoding.getLocalityData(latitude, longitude);
-    res.send('Lucknow');
+    try{
+        const location = await GeoCoding.getLocalityData(latitude, longitude);
+        if(!location) return res.send('Geocoding server down');
+        res.send(location.label);
+    } catch(error) {
+        console.log("Error in reverse geocoding", error);
+    }
 });
 
 router.post('/getNearestTractor', jwt.validate, async (req, res) => {
