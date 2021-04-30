@@ -14,7 +14,7 @@ const download = require('./routes/download');
 mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}).then(() => console.log("Connected"));
 
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer(app);
 require('./routes/socket').start(server);
 
 app.use(express.json()); 
