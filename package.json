@@ -4,7 +4,8 @@
   "description": "This is the server for the Krishi react app",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
   },
   "author": "Arif Waqas, Tushar Aggarwal, Shobhit Tewari",
   "license": "ISC",
