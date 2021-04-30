@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.465d0b75.chunk.css",
+    "main.js": "/static/js/main.734deef6.chunk.js",
+    "main.js.map": "/static/js/main.734deef6.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.03887cff.js",
+    "runtime-main.js.map": "/static/js/runtime-main.03887cff.js.map",
+    "static/js/2.752ecf10.chunk.js": "/static/js/2.752ecf10.chunk.js",
+    "static/js/2.752ecf10.chunk.js.map": "/static/js/2.752ecf10.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.465d0b75.chunk.css.map": "/static/css/main.465d0b75.chunk.css.map",
+    "static/js/2.752ecf10.chunk.js.LICENSE.txt": "/static/js/2.752ecf10.chunk.js.LICENSE.txt",
+    "static/media/github.44eee0c4.png": "/static/media/github.44eee0c4.png",
+    "static/media/idea-brief.9627142b.png": "/static/media/idea-brief.9627142b.png",
+    "static/media/mongodb.8abd7551.png": "/static/media/mongodb.8abd7551.png",
+    "static/media/nodejs.1fae19cc.png": "/static/media/nodejs.1fae19cc.png",
+    "static/media/react.d32b912d.png": "/static/media/react.d32b912d.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.03887cff.js",
+    "static/js/2.752ecf10.chunk.js",
+    "static/css/main.465d0b75.chunk.css",
+    "static/js/main.734deef6.chunk.js"
+  ]
+}

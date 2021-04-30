@@ -3,6 +3,7 @@ if(process.env !== 'production') require('dotenv').config();
 const http = require('http');
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path')
 
 const sms = require('./services/sms');
 const api = require('./routes/api');
@@ -20,10 +21,15 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use('/public/images/profile' ,express.static(__dirname+'/public/images/profile'));
 app.use('/public/resources' ,express.static(__dirname+'/public/resources'));
+app.use(express.static('build'));
 
 app.use('/api', api);
 app.use('/auth/api', authapi);
 app.use('/admin', admin);
 app.use('/download', download);
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/build/index.html'));
+});
 
 server.listen(process.env.PORT, ()=>console.log(`Server started on port ${process.env.PORT}`));
