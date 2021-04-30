@@ -5,7 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const http = require('http');
-const https = require('https');
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path')
@@ -20,7 +19,7 @@ const { requestParser } = require('admin-bro');
 mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}).then(() => console.log("Connected"));
 
 const app = express();
-const server = https.createServer(app);
+const server = http.createServer(app);
 require('./routes/socket').start(server);
 
 app.use(express.json()); 
